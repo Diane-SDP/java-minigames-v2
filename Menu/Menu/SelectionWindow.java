@@ -43,6 +43,7 @@ import FlappyBird.FlappyBird;
 public class SelectionWindow extends JFrame {
     private Image backgroundImage;
     public static DataBaseManager db;
+    private Clip clip;
 
 
     public SelectionWindow() {
@@ -515,58 +516,71 @@ public class SelectionWindow extends JFrame {
         return button;
     }
 
+    
+
     private void openFlappyBird() {
+        clip.stop();        
         dispose();
         FlappyBird flappyBird = new FlappyBird();
     }
     
     private void openSudoku() { //Ouvre le jeu Sudoku
+        clip.stop();        
         dispose();
         Sudoku sudoku = new Sudoku();        
     }
     private void openBlackjack() { //Ouvre le jeu BlackJack
+        clip.stop();       
         dispose();
         Blackjack blackJack = new Blackjack();
 
     }
     private void openChess(){
+        clip.stop();        
         dispose();
         GridChess chess = new GridChess();
     }
     private void openPacMan(){
+        clip.stop();        
         dispose();
         PacManGame pacman = new PacManGame();
     }
     private void openSnake(){
+        clip.stop();        
         dispose();
         Grid snake = new Grid();
 
     }
     private void openMemory() { //Ouvre le jeu Memory
+        clip.stop();        
         dispose();
         Memory memory = new Memory();
         memory.setVisible(true);
     }    
 
     private void openHangman() { //Ouvre le jeu du pendu
+        clip.stop();        
         dispose();
         Hangman hangman = new Hangman();
         hangman.setVisible(true);
     }
 
     private void openGame() { //Ouvre le jeu 2048
+        clip.stop();        
         dispose();
         NumberPuzzleGame game = new NumberPuzzleGame();
         game.setVisible(true);
     }
 
     private void openMoreOrLess() { 
+        clip.stop();       
         dispose();
         MoreOrLess moreOrLess = new MoreOrLess();
         moreOrLess.setVisible(true);
     }
 
     private void openTrueOrFalse() { 
+        clip.stop();       
         dispose();
         TrueOrFalse TrueOrFalse = new TrueOrFalse();
         TrueOrFalse.setVisible(true);
@@ -686,10 +700,10 @@ public class SelectionWindow extends JFrame {
 
     }
 
-    public static void playSoundLoop(String fileUrl) {
+    public  void playSoundLoop(String fileUrl) {
         try {
             File audioFile = new File(fileUrl);
-            Clip clip = AudioSystem.getClip();
+            clip = AudioSystem.getClip();
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(audioFile);
             clip.open(audioIn);
             clip.loop(Clip.LOOP_CONTINUOUSLY);

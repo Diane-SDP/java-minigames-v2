@@ -472,6 +472,7 @@ public class SelectionWindow extends JFrame {
         }
         
         setVisible(true);
+        playSoundLoop("./sound/music.wav");
     }
 
     private JButton createButton(String text, boolean enableAction) { 

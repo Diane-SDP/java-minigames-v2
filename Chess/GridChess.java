@@ -47,7 +47,7 @@ public class GridChess extends JFrame {
         BackgroundPanel backgroundPanel = new BackgroundPanel();
         setContentPane(backgroundPanel);
         setLayout(new BorderLayout());
-        backgroundImage = new ImageIcon("rules.png").getImage();
+        backgroundImage = new ImageIcon("./Chess/Image/rules.png").getImage();
        
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

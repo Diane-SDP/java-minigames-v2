@@ -17,7 +17,6 @@ public class ShowMovement implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(this.Grid.PiecesGrid[x][y].GetColor() + " " + this.Grid.PiecesGrid[x][y].GetPiece());
         if(Grid.Turn && this.Grid.PiecesGrid[x][y].GetColor() == "Black"){
             return;
         }else if (!Grid.Turn && this.Grid.PiecesGrid[x][y].GetColor() == "White"){
@@ -49,7 +48,6 @@ public class ShowMovement implements ActionListener {
 
                 break;
             default:
-                System.out.println("empty case selected");
                 break;
         }
         this.Grid.Turn = !this.Grid.Turn;
@@ -94,7 +92,6 @@ public class ShowMovement implements ActionListener {
     
                     break;
                 default:
-                    System.out.println("empty case selected");
                     break;
             }
         }
@@ -131,18 +128,15 @@ public class ShowMovement implements ActionListener {
     }
 
     private void addMovementListener(int x, int y, int newX, int newY) {
-        // if (this.Grid.PiecesGrid[newX][newY].GetPiece() =="" ){
             this.Grid.BackgroundGrid[newX][newY].setBackground(new Color(255, 100, 100));
 
             for (ActionListener al : this.Grid.PiecesGrid[newX][newY].Panel.getActionListeners()) {
                 this.Grid.PiecesGrid[newX][newY].Panel.removeActionListener(al);
             }
             this.Grid.PiecesGrid[newX][newY].Panel.addActionListener(new DoMovement(x, y, newX, newY, Grid));
-        // }
     }
     private int ShowPawn(int x, int y) {
         int nbmoove = 0;
-        System.out.println("move Pawn");
         FillCancelButton();
     
         int direction = (this.Grid.PiecesGrid[x][y].GetColor() == "Black") ? 1 : -1;
@@ -212,7 +206,6 @@ public class ShowMovement implements ActionListener {
 
     private int ShowQueen(int x, int y) {
         int nbmoove = 0;
-        System.out.println("move Queen");
         FillCancelButton();
     
         for (int i = x + 1; i < 8; i++) {
@@ -334,7 +327,6 @@ public class ShowMovement implements ActionListener {
 
     private int ShowBishop(int x, int y) {
         int nbmoove = 0;
-        System.out.println("move Bishop");
         FillCancelButton();
     
         for (int i = 1; i < 8; i++) {
@@ -399,7 +391,6 @@ public class ShowMovement implements ActionListener {
 
     private int ShowRook(int x, int y) {
         int nbmoove= 0 ;
-        System.out.println("move Rook");
         FillCancelButton();
         for (int i = x + 1; i < 8; i++) {
             if (!this.Grid.PiecesGrid[i][y].GetPiece().equals("")) {
@@ -466,7 +457,6 @@ public class ShowMovement implements ActionListener {
 
     private int ShowKnight(int x, int y) {
         int nbmoove = 0 ;
-        System.out.println("move Knight");
         FillCancelButton();
 
         int[][] moves = {

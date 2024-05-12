@@ -29,59 +29,48 @@ public class Case {
             text.setText(String.valueOf(nb));
             switch (nb) {
                 case 2:
-                    // this.panel.setBackground(new Color(238,228,218));
                     removePieceImage(this.panel);
                     setPieceImage("./image/newruby.png", this.panel);
         
                     break;
                 case 4:
-                    // this.panel.setBackground(new Color(237,224,200));
                     removePieceImage(this.panel);
                     setPieceImage("./image/bleu.png", this.panel);
                     break;
                 case 8:
-                    // this.panel.setBackground(new Color(242,177,121));
                     removePieceImage(this.panel);
                     setPieceImage("./image/rouge.png", this.panel);
                     break;
                 case 16:
-                    // this.panel.setBackground(new Color(245,149,99));
                     removePieceImage(this.panel);
                     setPieceImage("./image/violet.png", this.panel);
                     break;
                 case 32:
-                    // this.panel.setBackground(new Color(246,124,95));
                     removePieceImage(this.panel);
                     setPieceImage("./image/noir.png", this.panel);
                     break;
                 case 64:
-                    // this.panel.setBackground(new Color(246,94,59));
                     removePieceImage(this.panel);
                     setPieceImage("./image/jaune.png", this.panel);
                     break;
                 case 128:
-                    // this.panel.setBackground(new Color(236,205,114));
                     removePieceImage(this.panel);
                     setPieceImage("./image/orange.png", this.panel);
                     break;
                 case 256:
                     removePieceImage(this.panel);
-                    // this.panel.setBackground(new Color(237,204,97));
                     setPieceImage("./image/Fragment_de_Triforce_7.png", this.panel);
                     break;
                 case 512:
                     removePieceImage(this.panel);
-                    // this.panel.setBackground(new Color(236,199,80));
                     setPieceImage("./image/triforce1.png", this.panel);
                     break;
                 case 1024:
                     removePieceImage(this.panel);
-                    // this.panel.setBackground(new Color(236,196,65));
                     setPieceImage("./image/triforce2.png", this.panel);
                     break;
                 case 2048:
                     removePieceImage(this.panel);
-                    // this.panel.setBackground(new Color(237,193,46));
                     setPieceImage("./image/triforce3.png", this.panel);
                     return true;
             
@@ -121,8 +110,6 @@ public class Case {
     
             targetButton.revalidate();
             targetButton.repaint();
-        } else {
-            System.out.println("Image loading failed!");
-        }
+        } 
     }
 }

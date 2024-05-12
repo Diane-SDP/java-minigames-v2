@@ -20,8 +20,6 @@ public class Case {
     }
     public void SetWall(){
         this.wall = true;
-        // this.panel.setBorder(BorderFactory.createLineBorder(new Color(0,75,248)));
-        // this.panel.setBackground(new Color(5,0,64));
         PacManGame.setImageOnPanel("./PacMan/Image/Wall.png",this.panel);
         this.panel.setBackground(new Color(0,0,0));
     }
@@ -44,8 +42,6 @@ public class Case {
     public void EatPoint(){
         this.point = false;
         PacManGame.removeImageFromPanel(this.panel);
-        // this.panel.setBackground(Color.black);
-        // this.panel.repaint();
     }
     public void RemovePower(){
         this.PowerUp = false;

@@ -6,7 +6,7 @@ import java.awt.desktop.ScreenSleepEvent;
 import javax.swing.*;
 
 import FlappyBird.FlappyBird;
-
+import Menu.SelectionWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
@@ -34,7 +34,7 @@ public class Grid extends JFrame{
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(4, 1));
-        DisplayMenu();
+        DisplayGame();
     }
 
     private Position AddApple(){
@@ -42,23 +42,76 @@ public class Grid extends JFrame{
         while (Snake.AppleInSnake(ApplePosition)){
             ApplePosition = Position.GetRandomPosition();
         }
-        ObjectsGame[ApplePosition.x][ApplePosition.y].setBackground(Color.red);
+        setPieceImage("./Snake/Image/larme.png", ObjectsGame[ApplePosition.x][ApplePosition.y], 50, 50, 0);
+        ObjectsGame[ApplePosition.x][ApplePosition.y].setBackground(GridGame[ApplePosition.x][ApplePosition.y].getBackground());
         ObjectsGame[ApplePosition.x][ApplePosition.y].setOpaque(true);
         return ApplePosition;
     }
     private void YouLoose() {
-        getContentPane().removeAll();
-        getContentPane().setBackground(new Color(255,127,127));
-        
-        JLabel gameOverLabel = new JLabel("T'as perdu gros chien");
-        gameOverLabel.setForeground(Color.WHITE);
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 50));
-        gameOverLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        add(gameOverLabel, BorderLayout.CENTER);
-        
-        revalidate(); 
-        repaint();
+            getContentPane().removeAll();
+            
+            setLayout(new BorderLayout());
+            JLabel gameOverLabel = new JLabel("Game Over");
+            gameOverLabel.setForeground(Color.red);
+            gameOverLabel.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
+            gameOverLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            
+            JLabel ScoreLabel = new JLabel("Score : "+Score);
+            ScoreLabel.setForeground(Color.red);
+            ScoreLabel.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
+            ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    
+            JButton Rejouer = new JButton("Rejouer");
+            Rejouer.setForeground(Color.red);
+            Rejouer.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
+            Rejouer.setHorizontalAlignment(SwingConstants.CENTER);
+            Rejouer.setBorderPainted(false);
+            Rejouer.setContentAreaFilled(false);
+            Rejouer.setFocusPainted(false);
+    
+    
+            JButton Quitter = new JButton("Quitter");
+            Quitter.setForeground(Color.red);
+            Quitter.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
+            Quitter.setHorizontalAlignment(SwingConstants.CENTER);
+            Quitter.setBorderPainted(false);
+            Quitter.setContentAreaFilled(false);
+            Quitter.setFocusPainted(false);
+    
+    
+            JPanel loosePanel = new JPanel(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.weightx = 1;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+    
+            loosePanel.add(gameOverLabel, gbc);
+            loosePanel.add(ScoreLabel, gbc);
+            loosePanel.add(Rejouer, gbc);
+            loosePanel.add(Quitter, gbc);
+            loosePanel.setOpaque(true);
+            loosePanel.setBackground(new Color(0,0,0));
+            add(loosePanel,BorderLayout.CENTER);
+            Score = 0;
+            Rejouer.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    remove(loosePanel);
+                    DisplayGame();
+                    revalidate();
+                    repaint();
+                }
+            });
+            Quitter.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    SwingUtilities.invokeLater(() -> new SelectionWindow());
+                }
+            });
+            revalidate(); 
+            repaint();
     }
 
     private void DisplayMenu(){
@@ -117,18 +170,15 @@ public class Grid extends JFrame{
             }
         }
 
-        //Add the Snake and the first apple in the Grid
-        ObjectsGame[Snake.GetHeadPosition().x][Snake.GetHeadPosition().y].setBackground(new Color(69, 115, 232));
-        ObjectsGame[Snake.GetHeadPosition().x][Snake.GetHeadPosition().y].setOpaque(true);
         ApplePosition = AddApple();
         ScoreText = new JLabel("Score : 0");
         layeredPane.add(ScoreText,JLayeredPane.RIGHT_ALIGNMENT);
         add(layeredPane, BorderLayout.CENTER);
 
         pack();
-        setSize(1000,1000);
+        setSize(768,790);
         setVisible(true);
-        
+        setPieceImage("./Snake/Image/tete.png",ObjectsGame[Snake.GetHeadPosition().x][Snake.GetHeadPosition().y],50,50,0);
         timer = new Timer(200, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -144,19 +194,16 @@ public class Grid extends JFrame{
                 if(Snake.GetTail().size() != 0){
                     Snake.MoveTheTail();
                 }
- 
+
                 DisplayHead();
-                if (Snake.GetHeadPosition().x > 14 || Snake.GetHeadPosition().x < 0 || Snake.GetHeadPosition().y > 14 ||Snake.GetHeadPosition().y < 0 || Snake.EatHimSelf()){
-                    timer.stop();
-                    YouLoose();
-                    return;
-                }   
+
+                
+ 
 
                 
                 ObjectsGame[LastTail.x][LastTail.y].setOpaque(false);
                 ObjectsGame[LastTail.x][LastTail.y].setBackground(Color.black);
                 removePieceImage(ObjectsGame[LastTail.x][LastTail.y]);
-                //set the color for the snake's tail
                 DisplayTail();
 
 
@@ -206,31 +253,12 @@ public class Grid extends JFrame{
         setFocusable(true);
         requestFocus();
     }
-    // public static void setPieceImage(String imagePath, JPanel targetButton, int width, int height) {
-    //     ImageIcon icon = new ImageIcon(imagePath);
-    //     Image image = icon.getImage();
-    //     if (image.getWidth(null) == -1) {
-    //         System.out.println("Image not found");
-    //         return;
-    //     }
-    //     Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH); 
-    
-    //     if (image != null) {
-    //         ImageIcon scaledIcon = new ImageIcon(scaledImage);
-    //         JLabel label = new JLabel(scaledIcon);
-    //         targetButton.setLayout(new BorderLayout());
-    //         targetButton.add(label, BorderLayout.CENTER);
-    
-    //         targetButton.revalidate();
-    //         targetButton.repaint();
-    //     }
-    // }
+   
 
     public static void setPieceImage(String imagePath, JPanel targetButton, int width, int height, double angle) {
         ImageIcon icon = new ImageIcon(imagePath);
         Image image = icon.getImage();
         if (image.getWidth(null) == -1) {
-            System.out.println("Image not found");
             return;
         }
         
@@ -272,10 +300,20 @@ public class Grid extends JFrame{
     }
     private void DisplayHead(){
         ObjectsGame[Snake.GetHeadPosition().x][Snake.GetHeadPosition().y].setOpaque(false);
-        ObjectsGame[Snake.GetHeadPosition().x][Snake.GetHeadPosition().y].setBackground(Color.black);
+        if (Snake.GetHeadPosition().x > 14 || Snake.GetHeadPosition().x < 0 || Snake.GetHeadPosition().y > 14 ||Snake.GetHeadPosition().y < 0){
+            timer.stop();
+            YouLoose();
+            return;
+        }  
         removePieceImage(ObjectsGame[Snake.GetHeadPosition().x][Snake.GetHeadPosition().y]);
         Snake.Move();
-        
+        if (Snake.GetHeadPosition().x > 14 || Snake.GetHeadPosition().x < 0 || Snake.GetHeadPosition().y > 14 ||Snake.GetHeadPosition().y < 0 || Snake.EatHimSelf()){
+            timer.stop();
+            YouLoose();
+            return;
+        } 
+        removePieceImage(ObjectsGame[Snake.GetHeadPosition().x][Snake.GetHeadPosition().y]);
+
         switch (Snake.GetTempDirection()) {
             case 1:
                 setPieceImage("./Snake/Image/tete.png",ObjectsGame[Snake.GetHeadPosition().x][Snake.GetHeadPosition().y],50,50,0);

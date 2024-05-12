@@ -94,12 +94,13 @@ public class NumberPuzzleGame extends JFrame{
         margPanel.setBackground(new Color(0, 0, 0,0));
 
 
-        JButton newGameButton = new JButton("New Game");
-        newGameButton.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 20));
+        JButton newGameButton = new JButton("Nouvelle Partie");
+        newGameButton.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 15));
         newGameButton.setForeground(Color.WHITE);
         newGameButton.setBorderPainted(false);
         newGameButton.setFocusPainted(false);
         newGameButton.setContentAreaFilled(false);
+        newGameButton.setSize(140, 50);
         newGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         newGameButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         newGameButton.setHorizontalTextPosition(SwingConstants.CENTER); 
@@ -108,6 +109,8 @@ public class NumberPuzzleGame extends JFrame{
         newGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
+                NumberPuzzleGame grid = new NumberPuzzleGame();
                 
             }
         });
@@ -198,7 +201,6 @@ public class NumberPuzzleGame extends JFrame{
                 BackgroundGrid[i][j].panel = new JPanel();
                 BackgroundGrid[i][j].panel.setBounds(j * offset, i * offset, cellSize, cellSize);
 
-                // BackgroundGrid[i][j].panel.setBounds(j * 120, i * 120, 120, 120);
                 BackgroundGrid[i][j].panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 BackgroundGrid[i][j].panel.setBackground(new Color(154,138,110));
                 LayeredPane.add(BackgroundGrid[i][j].panel, JLayeredPane.DEFAULT_LAYER);
@@ -210,7 +212,6 @@ public class NumberPuzzleGame extends JFrame{
                 NumberGrid[i][j].setBounds(j * offset, i * offset, cellSize, cellSize);
                 NumberGrid[i][j].setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 20));
                 NumberGrid[i][j].setForeground(Color.WHITE);
-                // NumberGrid[i][j].setBounds(j * 120, i * 120, 120, 120);
                 NumberGrid[i][j].setHorizontalAlignment(JLabel.RIGHT);
                 NumberGrid[i][j].setVerticalAlignment(JLabel.BOTTOM);
                 NumberGrid[i][j].setBackground(new Color(154,138,110,0));
@@ -308,7 +309,6 @@ public class NumberPuzzleGame extends JFrame{
                 NbToAdd = 4;
                 break;
             default:
-                System.out.println("Bad nb Gene for spawn nb");
                 break;
         }
         while(true){
@@ -323,22 +323,82 @@ public class NumberPuzzleGame extends JFrame{
     }
     private void TaLoose() {
         getContentPane().removeAll();
-        getContentPane().setBackground(new Color(255,127,127));
-        
-        JLabel gameOverLabel = new JLabel("T'as Loose chien");
-        gameOverLabel.setForeground(Color.WHITE);
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 50));
+        getContentPane().setBackground(new Color(255, 127, 127));
+        setLayout(new BorderLayout());
+    
+        JLabel gameOverLabel = new JLabel("Perdu !");
+        gameOverLabel.setForeground(Color.black);
+        gameOverLabel.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
         gameOverLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
-        add(gameOverLabel, BorderLayout.CENTER);
+        JLabel ScoreLabel = new JLabel("Score : " + Score);
+        ScoreLabel.setForeground(Color.black);
+        ScoreLabel.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
+        ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    
+        JButton Rejouer = new JButton("Rejouer");
+        Rejouer.setForeground(Color.black);
+        Rejouer.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
+        Rejouer.setHorizontalAlignment(SwingConstants.CENTER);
+        Rejouer.setBorderPainted(false);
+        Rejouer.setContentAreaFilled(false);
+        Rejouer.setFocusPainted(false);
+    
+        JButton Quitter = new JButton("Quitter");
+        Quitter.setForeground(Color.black);
+        Quitter.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
+        Quitter.setHorizontalAlignment(SwingConstants.CENTER);
+        Quitter.setBorderPainted(false);
+        Quitter.setContentAreaFilled(false);
+        Quitter.setFocusPainted(false);
+    
+        JPanel loosePanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(10, 10, 10, 10);  // Ajout de marges internes
+    
+        loosePanel.add(gameOverLabel, gbc);
+        loosePanel.add(ScoreLabel, gbc);
+        loosePanel.add(Rejouer, gbc);
+        loosePanel.add(Quitter, gbc);
+        loosePanel.setOpaque(true);
+        loosePanel.setBackground(new Color(154, 138, 110));
+    
+        // Configuration pour le panel principal
+        JPanel MainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbcMain = new GridBagConstraints();
+        gbcMain.weightx = 1;
+        gbcMain.weighty = 1; // Ajout de poids pour pousser le contenu au centre
+        gbcMain.anchor = GridBagConstraints.CENTER;
         
-        revalidate(); 
+        MainPanel.add(loosePanel, gbcMain);
+        MainPanel.setOpaque(false);
+        add(MainPanel, BorderLayout.CENTER);
+        Quitter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("quitter");
+                dispose();
+                SwingUtilities.invokeLater(() -> new SelectionWindow());
+            }
+        });
+        Rejouer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                NumberPuzzleGame grid = new NumberPuzzleGame();
+                
+            }
+        });
+        revalidate();
         repaint();
     }
+    
+    
     private boolean Loose(){
         for (int i = 0 ; i < 4;i++){
             for (int j = 0 ; j < 4;j++){
-                System.out.println(BackgroundGrid[i][j].GetNumber());
                 if(BackgroundGrid[i][j].GetNumber()==0){
                     return false;
                 }
@@ -348,26 +408,19 @@ public class NumberPuzzleGame extends JFrame{
     }
     private void ActionKeyListener(KeyEvent e){
         int keyCode = e.getKeyCode();
-        System.out.println("Score : "+Score);
         scoreValueLabel.setText(String.valueOf(Score));
         switch (keyCode) {
             case KeyEvent.VK_UP:
-                System.out.println("UP");
                 for(int p = 0 ; p < 4;p++){
                 for(int i = 1 ; i < 4 ;i++){
                     for(int j = 0 ; j < 4 ;j++){
-                        // BackgroundGrid[i+1][j].panel.setBackground(Color.red);
                         if(BackgroundGrid[i-1][j].GetNumber()==0){
                             BackgroundGrid[i-1][j].SetNumber(BackgroundGrid[i][j].GetNumber(),NumberGrid[i-1][j]);
                             BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
                             BackgroundGrid[i][j].panel.repaint();    
                         }else if(BackgroundGrid[i][j].GetNumber() == BackgroundGrid[i-1][j].GetNumber()){
                             BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
-                            Score+=BackgroundGrid[i-1][j].GetNumber()*2;
-                            if (BackgroundGrid[i-1][j].SetNumber(BackgroundGrid[i-1][j].GetNumber()*2,NumberGrid[i-1][j])){
-                                System.out.println("win");
-                            }
-                            
+                            Score+=BackgroundGrid[i-1][j].GetNumber()*2;        
                         }
                     }
                 }
@@ -379,11 +432,9 @@ public class NumberPuzzleGame extends JFrame{
                 SpawnNb();
                 break;
             case KeyEvent.VK_RIGHT:
-                System.out.println("RIGHT");
                 for(int p = 0 ; p < 4;p++){
                     for(int i = 0 ; i < 4 ;i++){
                         for(int j = 0 ; j < 3 ;j++){
-                            // BackgroundGrid[i+1][j].panel.setBackground(Color.red);
                             if(BackgroundGrid[i][j+1].GetNumber()==0){
                                 BackgroundGrid[i][j+1].SetNumber(BackgroundGrid[i][j].GetNumber(),NumberGrid[i][j+1]);
                                 BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
@@ -391,57 +442,22 @@ public class NumberPuzzleGame extends JFrame{
                             }else if(BackgroundGrid[i][j].GetNumber() == BackgroundGrid[i][j+1].GetNumber()){
                                 BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
                                 Score+=BackgroundGrid[i][j+1].GetNumber()*2;
-                                if (BackgroundGrid[i][j+1].SetNumber(BackgroundGrid[i][j+1].GetNumber()*2,NumberGrid[i][j+1])){
-                                    System.out.println("win");
-                                }
                                 
                             }
                         }
                     }
                 }
-                // for(int i = 2 ; i >= 0 ;i--){
-                //     for(int j = 0 ; j < 4 ;j++){
-                //         int casvide = 4;
-                //         if (BackgroundGrid[i][j].GetNumber() == 0){
-                //             continue;
-                //         }
-                //         while(casvide-i > 0){
-                //             casvide--;
-                //             if(BackgroundGrid[i][casvide].GetNumber() == 0){
-                //                 int beforenb = BackgroundGrid[i][j].GetNumber();
-                //                 BackgroundGrid[i][casvide].SetNumber(beforenb,NumberGrid[i][casvide]);
-                //                 System.out.println("number of new emplacement : "+BackgroundGrid[i][casvide].GetNumber());
-                //                 BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
-                //                 System.out.println("number of new emplacement : "+BackgroundGrid[i][casvide].GetNumber());
-                //                 BackgroundGrid[i][j].panel.repaint();
-                //                 BackgroundGrid[i][casvide].panel.repaint();
-                //                 break;
-                //             }else if (BackgroundGrid[i][casvide].GetNumber() == BackgroundGrid[i][j].GetNumber()){
-                //                 BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
-                //                 Score+=BackgroundGrid[i][casvide].GetNumber()*2;
-                //                 if (BackgroundGrid[i][casvide].SetNumber(BackgroundGrid[i][casvide].GetNumber()*2,NumberGrid[i][casvide])){
-                //                     System.out.println("win");
-                //                 }
-                //                 BackgroundGrid[i][j].panel.repaint();
-                //                 BackgroundGrid[i][casvide].panel.repaint();
-                //                 break;
-                //             }
-                //         }
-                //     }
-                // }
+             
+        
                 if( Loose()){
                     TaLoose();
                     return;
-                }
-                // SpawnNb();
-               
+                }               
                 break;
             case KeyEvent.VK_DOWN:
-                System.out.println("DOWN");
                 for(int p = 0 ; p < 4;p++){
                 for(int i = 0 ; i < 3 ;i++){
                     for(int j = 0 ; j < 4 ;j++){
-                        // BackgroundGrid[i+1][j].panel.setBackground(Color.red);
                         if(BackgroundGrid[i+1][j].GetNumber()==0){
                             BackgroundGrid[i+1][j].SetNumber(BackgroundGrid[i][j].GetNumber(),NumberGrid[i+1][j]);
                             BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
@@ -449,9 +465,6 @@ public class NumberPuzzleGame extends JFrame{
                         }else if(BackgroundGrid[i][j].GetNumber() == BackgroundGrid[i+1][j].GetNumber()){
                             BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
                             Score+=BackgroundGrid[i+1][j].GetNumber()*2;
-                            if (BackgroundGrid[i+1][j].SetNumber(BackgroundGrid[i+1][j].GetNumber()*2,NumberGrid[i+1][j])){
-                                System.out.println("win");
-                            }
                             
                         }
                     }
@@ -464,11 +477,9 @@ public class NumberPuzzleGame extends JFrame{
                 SpawnNb();
                 break;
             case KeyEvent.VK_LEFT:
-                System.out.println("LEFT");
                 for(int p = 0 ; p < 4;p++){
                 for(int i = 0 ; i < 4 ;i++){
                     for(int j = 1 ; j < 4 ;j++){
-                        // BackgroundGrid[i+1][j].panel.setBackground(Color.red);
                         if(BackgroundGrid[i][j-1].GetNumber()==0){
                             BackgroundGrid[i][j-1].SetNumber(BackgroundGrid[i][j].GetNumber(),NumberGrid[i][j-1]);
                             BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
@@ -476,9 +487,6 @@ public class NumberPuzzleGame extends JFrame{
                         }else if(BackgroundGrid[i][j].GetNumber() == BackgroundGrid[i][j-1].GetNumber()){
                             BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
                             Score+=BackgroundGrid[i][j-1].GetNumber()*2;
-                            if (BackgroundGrid[i][j-1].SetNumber(BackgroundGrid[i][j-1].GetNumber()*2,NumberGrid[i][j-1])){
-                                System.out.println("win");
-                            }
                             
                         }
                     }

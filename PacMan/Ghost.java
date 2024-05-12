@@ -60,9 +60,6 @@ public class Ghost extends JPanel{
         super.paintComponent(g);
         g.setColor(this.GhostColor);
         g.drawImage(new ImageIcon("./PacMan/Image/ghost.png").getImage(), PosX, PosY, 25, 25,this);
-        // g.fillRect(PosX, PosY, 25, 25);
-        
-
     }
 
 

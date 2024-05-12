@@ -5,6 +5,8 @@ import Hangman.*;
 import Memory.*;
 import Blackjack.*;
 import Snake.Grid;
+import Snake.Snake;
+import Sudoku.Sudoku;
 import TrueOrFalse.*;
 import Chess.*;
 import NumberPuzzleGame.*;
@@ -35,6 +37,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import DataBase.DataBaseManager;
+import FlappyBird.FlappyBird;
 
 
 public class SelectionWindow extends JFrame {
@@ -43,41 +46,38 @@ public class SelectionWindow extends JFrame {
 
 
     public SelectionWindow() {
-        ImageIcon icon = new ImageIcon("./image/start.gif");
-        JLabel label = new JLabel(icon);
-        add(label);
-        setSize(1280, 720);
-        setLayout(new FlowLayout());
-        setLocationRelativeTo(null);
-        setVisible(true);
+            ImageIcon icon = new ImageIcon("./image/start.gif");
+            JLabel label = new JLabel(icon);
+            add(label);
+            setSize(1280, 720);
+            setLayout(new FlowLayout());
+            setLocationRelativeTo(null);
+            setVisible(true);
      
-        Timer soundTimer = new Timer(90, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                playSound("./sound/start.wav");
-            }
-        });
-        soundTimer.setRepeats(false);
-        soundTimer.start();
+            Timer soundTimer = new Timer(90, new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    playSound("./sound/start.wav");
+                }
+            });
+            soundTimer.setRepeats(false);
+            soundTimer.start();
     
-        Timer removeLabelTimer = new Timer(3800, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                remove(label);
-                DisplayMenu();
-                repaint(); 
-            }
-        });
-        removeLabelTimer.setRepeats(false);
-        removeLabelTimer.start();
+            Timer removeLabelTimer = new Timer(3800, new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    remove(label);
+                    DisplayMenu();
+                    repaint(); 
+                }
+            });
+            removeLabelTimer.setRepeats(false);
+            removeLabelTimer.start();
+      
     }
 
     private void DisplayMenu() {
         ImageIcon icon = new ImageIcon("./image/bgwallpaperzelda.png");
         backgroundImage = icon.getImage();
         setIconImage(new ImageIcon("./image/zelda.png").getImage());
-        if (backgroundImage == null) {
-            System.out.println("L'image n'a pas pu être chargée. Vérifiez le chemin.");
-        }
-
         setTitle("Main Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1920, 1080);
@@ -86,7 +86,6 @@ public class SelectionWindow extends JFrame {
         if (graphicsDevice.isFullScreenSupported()) {
             graphicsDevice.setFullScreenWindow(this);
         } else {
-            System.err.println("Le mode plein écran n'est pas pris en charge");
             dispose();
         }
 
@@ -114,14 +113,12 @@ public class SelectionWindow extends JFrame {
         titlePanel.setMaximumSize(new Dimension(503, 55));
         titlePanel.setBackground(new Color(217, 217, 217, 127));
         titlePanel.add(Box.createHorizontalGlue());
-        // titlePanel.add(Box.createHorizontalGlue());
         titlePanel.add(titleLabel);
 
         JPanel gamHonzPanel = new JPanel();
         gamHonzPanel.setLayout(new BoxLayout(gamHonzPanel, BoxLayout.X_AXIS));
         gamHonzPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         gamHonzPanel.setOpaque(false);
-        // gamHonzPanel.setLayout(new FlowLayout());
 
         JPanel gamHonzPanel2 = new JPanel();
         gamHonzPanel2.setLayout(new BoxLayout(gamHonzPanel2, BoxLayout.X_AXIS));
@@ -406,7 +403,6 @@ public class SelectionWindow extends JFrame {
         gamHonzPanel2.add(numberPuzzleGamePanel);
         centerPanel.add(spacPanel9);
         centerPanel.add(gamHonzPanel3);
-        // gamHonzPanel3.add(spacPanel12);
         gamHonzPanel3.add(pacManPanel);
         gamHonzPanel3.add(spacPanel10);
         gamHonzPanel3.add(snakePanel);
@@ -446,7 +442,7 @@ public class SelectionWindow extends JFrame {
             btnExit.setBorderPainted(false);
             btnExit.setFocusPainted(false);
             btnExit.setContentAreaFilled(false);
-            btnExit.setText("Exit");
+            btnExit.setText("Quitter");
             btnExit.setFont(new Font("The Wild Breath of Zelda", Font.PLAIN, 50));
             btnExit.setForeground(new Color(151, 121, 89 , 255));
             btnExit.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -476,7 +472,6 @@ public class SelectionWindow extends JFrame {
         }
         
         setVisible(true);
-        playSoundLoop("./sound/music.wav");
     }
 
     private JButton createButton(String text, boolean enableAction) { 
@@ -508,38 +503,42 @@ public class SelectionWindow extends JFrame {
                     button.addActionListener(e -> openPacMan());
                 }else if (text.equals("Chess")){
                     button.addActionListener(e -> openChess());
-                }
-                 /*else if (text.equals("Sudoku")) {
+                }else if (text.equals("Sudoku")) {
                     button.addActionListener(e -> new Sudoku());
                 } else if (text.equals("Snake")) {
                     button.addActionListener(e -> new Snake());
                 } else if (text.equals("Flappy Bird")) {
                     button.addActionListener(e -> new FlappyBird());
-                }*/
+                }
             }
         return button;
     }
 
+    private void openFlappyBird() {
+        dispose();
+        FlappyBird flappyBird = new FlappyBird();
+    }
+    
+    private void openSudoku() { //Ouvre le jeu Sudoku
+        dispose();
+        Sudoku sudoku = new Sudoku();        
+    }
     private void openBlackjack() { //Ouvre le jeu BlackJack
         dispose();
         Blackjack blackJack = new Blackjack();
 
-        // blackJack.setVisible(true);
     }
     private void openChess(){
         dispose();
         GridChess chess = new GridChess();
-        // chess.setVisible(true);
     }
     private void openPacMan(){
         dispose();
         PacManGame pacman = new PacManGame();
-        // pacman.setVisible(true);
     }
     private void openSnake(){
         dispose();
         Grid snake = new Grid();
-        // snake.setVisible(true);
 
     }
     private void openMemory() { //Ouvre le jeu Memory
@@ -637,7 +636,6 @@ public class SelectionWindow extends JFrame {
                     isHovered = true;
                     backgroundColor = new Color(98, 209, 255, 255);  // couleur de survol
                     repaint();
-                    // linkedButton.setForeground(Color.WHITE);  
                     linkedButton.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 38));
                     playSound("./sound/hover.wav");
                 }
@@ -646,7 +644,6 @@ public class SelectionWindow extends JFrame {
                     isHovered = false;
                     backgroundColor = new Color(1, 159, 222, 160);  // couleur initiale
                     repaint();
-                    // linkedButton.setForeground(new Color(255, 255, 255, 240));  // réinitialiser la couleur du bouton
                     linkedButton.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 30));
                 }
                 @Override
@@ -677,22 +674,22 @@ public class SelectionWindow extends JFrame {
 
     private void playSound(String filePath) {
         try {
-
-            URL url = new URL(filePath);
+            File audioFile = new File(filePath);
             Clip clip = AudioSystem.getClip();
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(audioFile);
             clip.open(audioIn);
             clip.start();
-        } catch (Exception e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
+
     }
 
     public static void playSoundLoop(String fileUrl) {
         try {
-            URL url = new URL(fileUrl);
+            File audioFile = new File(fileUrl);
             Clip clip = AudioSystem.getClip();
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(audioFile);
             clip.open(audioIn);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -703,7 +700,6 @@ public class SelectionWindow extends JFrame {
     public static void main(String[] args) { 
         db = new DataBaseManager();
         db.CreateDBBlackJack();
-        db.test();
         db.CreateDBHangman();
         db.CreateDBTrueFalse();
         SwingUtilities.invokeLater(() -> new SelectionWindow());

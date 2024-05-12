@@ -2,6 +2,9 @@ package PacMan;
 
 import java.awt.*;
 import javax.swing.*;
+
+import Menu.SelectionWindow;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -10,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
+import java.rmi.server.LogStream;
 
 public class PacManGame extends JFrame {
     public static Case[][] GridBackground;
@@ -40,7 +44,7 @@ public class PacManGame extends JFrame {
             e.printStackTrace();
         }
         setResizable(false);
-        DisplayMenu();
+        DisplayGame();
     }
 
     private void DisplayMenu(){
@@ -148,7 +152,6 @@ public class PacManGame extends JFrame {
         setSize(940,870);
 
         setVisible(true);
-        // PacMan.NextAnimation();
         timer = new Timer(30, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -251,7 +254,6 @@ public class PacManGame extends JFrame {
             default:
                 break;
         }
-        // this.GridBackground[2][2].SetWall();
         for(int i = 0 ; i < 31;i++){
             for(int j = 0 ;j < 28;j++){
                 count++;
@@ -308,7 +310,6 @@ public class PacManGame extends JFrame {
 
 
     public static void main(String[] args) {
-        // SwingUtilities.invokeLater(() -> new PacManGame());
         pacman = new PacManGame();
     }
     public static void setImageOnPanel(String imagePath, JPanel panel) {
@@ -334,13 +335,10 @@ public class PacManGame extends JFrame {
             panel.add(label, BorderLayout.CENTER);
             panel.revalidate();
             panel.repaint();
-        } else {
-            System.out.println("Image loading failed!");
-        }
+        } 
     }
     public static void removeImageFromPanel(JPanel panel) {
         panel.removeAll();
-        // panel.setOpaque(true);
         panel.revalidate();
         panel.repaint();
         
@@ -376,15 +374,67 @@ public class PacManGame extends JFrame {
 
     private void TaLoose() {
         getContentPane().removeAll();
-        getContentPane().setBackground(new Color(255,127,127));
         
-        JLabel gameOverLabel = new JLabel("T'as Loose chien");
-        gameOverLabel.setForeground(Color.WHITE);
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 50));
+        setLayout(new BorderLayout());
+        JLabel gameOverLabel = new JLabel("Game Over");
+        gameOverLabel.setForeground(Color.red);
+        gameOverLabel.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
         gameOverLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
-        add(gameOverLabel, BorderLayout.CENTER);
+        JLabel ScoreLabel = new JLabel("Score : "+Score);
+        ScoreLabel.setForeground(Color.red);
+        ScoreLabel.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
+        ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JButton Rejouer = new JButton("Rejouer");
+        Rejouer.setForeground(Color.red);
+        Rejouer.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
+        Rejouer.setHorizontalAlignment(SwingConstants.CENTER);
+        Rejouer.setBorderPainted(false);
+        Rejouer.setContentAreaFilled(false);
+        Rejouer.setFocusPainted(false);
+
+
+        JButton Quitter = new JButton("Quitter");
+        Quitter.setForeground(Color.red);
+        Quitter.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 50));
+        Quitter.setHorizontalAlignment(SwingConstants.CENTER);
+        Quitter.setBorderPainted(false);
+        Quitter.setContentAreaFilled(false);
+        Quitter.setFocusPainted(false);
+
+
+        JPanel loosePanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        loosePanel.add(gameOverLabel, gbc);
+        loosePanel.add(ScoreLabel, gbc);
+        loosePanel.add(Rejouer, gbc);
+        loosePanel.add(Quitter, gbc);
+        loosePanel.setOpaque(true);
+        loosePanel.setBackground(new Color(0,0,0));
+        add(loosePanel,BorderLayout.CENTER);
         Score = 0;
+        Rejouer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                remove(loosePanel);
+                DisplayGame();
+                revalidate();
+                repaint();
+            }
+        });
+        Quitter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                SwingUtilities.invokeLater(() -> new SelectionWindow());
+            }
+        });
         revalidate(); 
         repaint();
     }

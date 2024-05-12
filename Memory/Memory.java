@@ -40,7 +40,7 @@ public class Memory extends JFrame {
         gamePanel = new JPanel(new GridLayout(4, 4));
         add(gamePanel, BorderLayout.CENTER);
 
-        status = new JLabel("Moves: 0   Pairs Found: 0");
+        status = new JLabel("Mouvements : 0   Paires trouvées: 0");
         status.setFont(new Font("The Wild Breath of Zelda", Font.PLAIN, 25));
         status.setForeground(Color.WHITE);
         add(status, BorderLayout.SOUTH);
@@ -90,11 +90,11 @@ public class Memory extends JFrame {
                         Card2.show();
                         nbGuess++;
                         if (nbGuess == 15 ){
-                            JOptionPane.showMessageDialog(new JFrame(), "You loose , you found "+pairsFound+" pairs in 20 moove with "+Score+" Score.", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(new JFrame(), "Tu as perdu , tu as troyvé "+pairsFound+" paires en 20 mouvements avec "+Score+" Score.", "Perdu", JOptionPane.INFORMATION_MESSAGE);
                             timer.stop();
                             return;
                         }
-                        status.setText("Moves: " + nbGuess + "   Pairs Found: " + pairsFound);
+                        status.setText("Mouvements: " + nbGuess + "   Paires trouvées: " + pairsFound);
                         timer = new Timer(1000, new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 checkMatch();
@@ -117,7 +117,7 @@ public class Memory extends JFrame {
         }
     }
     private void DisplayMenu(){
-        TitleGame = new JLabel("Memory Game");
+        TitleGame = new JLabel("Memory");
         ImageIcon icon = new ImageIcon("./Memory/image/wallpaper.png");
         backgroundImage = icon.getImage();
         
@@ -160,7 +160,7 @@ public class Memory extends JFrame {
         ExitPanel.setMaximumSize(new Dimension(60, 60));
         ExitPanel.setBackground(new Color(0, 0, 0, 0));
 
-        StartGame = new JButton("Start Game");
+        StartGame = new JButton("Jouer");
         StartGame.setFont(new Font("The Wild Breath of Zelda", Font.PLAIN, 30));
         StartGame.setMaximumSize(new Dimension(300, 100));
         StartGame.setBackground(new Color(162, 171, 175, 255));
@@ -179,7 +179,7 @@ public class Memory extends JFrame {
             }
         });
 
-        JButton Exit = new JButton("Exit");
+        JButton Exit = new JButton("Quitter");
         Exit.setFont(new Font("The Wild Breath of Zelda", Font.PLAIN, 30));
         Exit.setMaximumSize(new Dimension(300, 100));
         Exit.setBackground(new Color(162, 171, 175, 255));
@@ -218,7 +218,7 @@ public class Memory extends JFrame {
             pairsFound++;
             Score += 2;
             if (pairsFound == 8) {
-                JOptionPane.showMessageDialog(this, "Congratulations! You've found all pairs in " + nbGuess + " moves with a score of "+Score, "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Félicitation ! Tu as trouvé toutes les paires en " + nbGuess + " mouvement avec un score de "+Score, "Gagné", JOptionPane.INFORMATION_MESSAGE);
                 timer.stop();
             }
         } else {
@@ -248,17 +248,11 @@ public class Memory extends JFrame {
         public CardButton(int id) {
             this.id = id;
             this.setPreferredSize(new Dimension(100, 100));
-            // Construct the image path dynamically based on the card id
             String imagePath = "./Memory/image/image_" + id + ".png";
             this.imageIcon = new ImageIcon(imagePath);
-            if (imageIcon.getImageLoadStatus() != MediaTracker.COMPLETE) {
-                System.out.println("Erreur de chargement de l'image: " + imagePath);
-            } 
             String BGPath = "./Memory/image/bg.png";
             this.hidenSide = new ImageIcon(BGPath);
-            if (hidenSide.getImageLoadStatus() != MediaTracker.COMPLETE) {
-                System.out.println("Erreur de chargement de l'image: " + BGPath);
-            } 
+            
 
             setIcon(hidenSide);
         }    

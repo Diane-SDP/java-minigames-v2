@@ -10,6 +10,7 @@ public class Snake {
     public Snake(){
        this.HeadPosition = new Position(7, 7);
        this.Direction = 1;
+       this.TempDirection = 1;
        this.Tail = new ArrayList<Position>();
        this.TailLenght = 0;
     }

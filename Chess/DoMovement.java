@@ -22,7 +22,6 @@ public class DoMovement implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e){
-        System.out.println("move"+x+y+"to"+newx+newy+"by "+this.Grid.PiecesGrid[x][y].GetPiece());
         if(this.Grid.PiecesGrid[newx][newy].GetPiece()=="King"){
             if (this.Grid.PiecesGrid[x][y].GetColor() == "White"){
                 YouLoose("Noir");
@@ -54,12 +53,11 @@ public class DoMovement implements ActionListener{
                 } else {
                     Grid.BackgroundGrid[i][j].setBackground(new Color(118,130,86));
                 }
-                Grid.BackgroundGrid[i][j].setBounds(j * 130, i * 130, 130, 130);
+                Grid.BackgroundGrid[i][j].setBounds(j * 100, i * 100, 100, 100);
                 for(ActionListener al : this.Grid.PiecesGrid[i][j].Panel.getActionListeners()) {
                     this.Grid.PiecesGrid[i][j].Panel.removeActionListener(al);
                 }
                 Grid.PiecesGrid[i][j].Panel.addActionListener(new ShowMovement(i,j,Grid));
-                // Grid.LayeredPane.add(Grid.BackgroundGrid[i][j], JLayeredPane.DEFAULT_LAYER);
             }
         }
     }

@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -29,38 +30,23 @@ public class FlappyBird extends JFrame {
     private int score = 0;
     private JLabel DisplayScore = new JLabel("0");
     private Thread obstacleThread;
-
+    private Image backgroundImage;
     public FlappyBird() {
         super("Flappy Bird");
         DisplayMenu();
     }
+    
     private void DisplayMenu(){
-        setSize(400, 400);
-        JLabel TitleGame = new JLabel("Snake");
-        add(TitleGame, BorderLayout.NORTH);
-
-        JPanel buttonPanel = new JPanel();
-        JButton StartGame = new JButton("Jouer");
-        JButton Retour = new JButton("Retour");
-        buttonPanel.add(StartGame);
-        buttonPanel.add(Retour);
-        
-        add(buttonPanel, BorderLayout.SOUTH);
-        StartGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                remove(buttonPanel);
-                remove(TitleGame);
-                DisplayGame();
-                revalidate();
-                repaint();
-            }
-        });
-        setVisible(true);
+        DisplayGame();
     }
     private void DisplayGame(){
-        
-        setSize(1000, 800);
+        ImageIcon icon = new ImageIcon("./FlappyBird/Image/BG.png");
+        backgroundImage = icon.getImage();
+        BackgroundPanel backgroundPanel = new BackgroundPanel();
+        setContentPane(backgroundPanel);
+        setLayout(new BorderLayout());
+
+        setSize(1200, 1000);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         bird = new Bird();
@@ -71,7 +57,6 @@ public class FlappyBird extends JFrame {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                System.out.println("paf");
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     if (gameOver) {
                         
@@ -94,9 +79,8 @@ public class FlappyBird extends JFrame {
                 try {
                     
                     int gapPosition = rand.nextInt(getHeight() - 120);
-                    System.out.println("new obstacles");
                     obstacles.add(new Obstacle(getWidth(), gapPosition));
-                    Thread.sleep(3000); 
+                    Thread.sleep(6000); 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -118,9 +102,17 @@ public class FlappyBird extends JFrame {
         });
         obstacleMoveThread.start();
     }
-
+    private class BackgroundPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (backgroundImage != null) {
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            } 
+        }
+    }
+    
     private void moveObstacles() {
-        // System.out.println(obstacles);
         Iterator<Obstacle> iterator = obstacles.iterator();
         while (iterator.hasNext()) {
             Obstacle obstacle = iterator.next();
@@ -139,7 +131,6 @@ public class FlappyBird extends JFrame {
     private void restartGame() {
         bird.reset();
         obstacles.clear();
-        System.out.println(obstacles);
         gameOver = false;
         score = 0;
         obstacleThread.stop();
@@ -155,7 +146,7 @@ public class FlappyBird extends JFrame {
             }
         }
     }
-    
+
     
 
     public static void main(String[] args) {
@@ -211,7 +202,7 @@ public class FlappyBird extends JFrame {
         }
 
         public boolean isOut() {
-            if (birdY > 600 || birdY < 0) {
+            if (birdY > 1000 || birdY < 0) {
                 return true;
             }
             return false;
@@ -232,9 +223,8 @@ public class FlappyBird extends JFrame {
         }
         @Override
         protected void paintComponent(Graphics g) {
-            System.out.println("truc");
             super.paintComponent(g);
-            g.drawImage(ActualImage, 50, birdY, 100, 100, this);
+            g.drawImage(ActualImage, 50, birdY, 80, 80, this);
 
             for (Obstacle obstacle : obstacles) {
                 obstacle.draw(g);
@@ -243,7 +233,7 @@ public class FlappyBird extends JFrame {
             if (gameOver) {
                 g.setColor(Color.RED);
                 g.setFont(new Font("Arial", Font.BOLD, 40));
-                g.drawString("GAME OVER", getWidth() / 2 - 120, getHeight() / 2);
+                g.drawString("Perdu Tu as fait "+score+" score", getWidth() / 2 - 120, getHeight() / 2);
             }
         }
 
@@ -253,12 +243,15 @@ public class FlappyBird extends JFrame {
         private int x, y, width, height;
         private Boolean isPassed = false;
         private int speed = 3;
-
+        private Image UpTree;
+        private Image DownTree;
         public Obstacle(int x, int y) {
             this.x = x;
             this.y = y;
-            this.width = 50;
+            this.width = 130;
             this.height = 200;
+            UpTree = new ImageIcon("./FlappyBird/Image/uptree.png").getImage();
+            DownTree = new ImageIcon("./FlappyBird/Image/downtree.png").getImage();
         }
 
         public void move() {
@@ -285,8 +278,9 @@ public class FlappyBird extends JFrame {
 
         public void draw(Graphics g) {
             g.setColor(Color.GREEN);
-            g.fillRect(x, 0, width, y);
-            g.fillRect(x, y + height, width, getHeight() - (y + height));
+            g.drawImage(UpTree, x, 0, width, y, null);
+            g.drawImage(DownTree, x, y + height, width, getHeight() - (y + height),null);
+
         }
 
         public int getX() {

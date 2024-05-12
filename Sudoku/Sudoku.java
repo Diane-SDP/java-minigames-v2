@@ -71,7 +71,7 @@ public class Sudoku {
             }
 
         }
-        initGrid(60);
+        initGrid(30);
         Grid();
     }
 
@@ -142,18 +142,18 @@ public class Sudoku {
             buttonPanel.add(numButton);
         }
 
-        JButton validateButton = new JButton("Validate");
+        JButton validateButton = new JButton("Validez");
         validateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (validateGrid()) {
-                    JOptionPane.showMessageDialog(frame, "Congratulations! You solved the Sudoku in "+second+"s !");
+                    JOptionPane.showMessageDialog(frame, "Félicitation! Tu as résolu le sudoku en "+second+" !");
                     stopTimer();
                     if (db.GetBestScore() < 1000-second){
                         db.SetScore(1000-second);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(frame, "There are errors in your solution. Keep trying!");
+                    JOptionPane.showMessageDialog(frame, "Il ya des erreurs dans la grille. Retente !");
                 }
             }
         });
@@ -188,7 +188,7 @@ public class Sudoku {
         return true;
     }
     private static boolean isPartValid(int startRow, int startCol, int rows, int cols) {
-        boolean[] seen = new boolean[10]; // Index 0 will be unused
+        boolean[] seen = new boolean[10]; // Index 0 jamais utilisé
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 int row = startRow + i;

@@ -31,7 +31,6 @@ public class Hangman extends JFrame implements ActionListener {
     private JButton guessButton;
     private JLabel TryText;
     private JLabel TitleGame;
-    private JPanel buttonPanel;
     private JButton StartGame;
     private JLabel  HangMan;
     private int Score;
@@ -42,7 +41,6 @@ public class Hangman extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(4, 1));
         Score = 0;
-        System.out.println(words);
         DisplayMenu();
         setVisible(true);
     }
@@ -57,15 +55,8 @@ public class Hangman extends JFrame implements ActionListener {
 
         setTitle("Hangman");
         setSize(1920,1080);
-        // setResizable(false);
         setLocationRelativeTo(null);
-        // GraphicsDevice graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        // if (graphicsDevice.isFullScreenSupported()) {
-        //     graphicsDevice.setFullScreenWindow(this);
-        // } else {
-        //     System.err.println("Le mode plein écran n'est pas pris en charge");
-        //     dispose();
-        // }
+
 
         JPanel centerJPanel = new JPanel();
         centerJPanel.setLayout(new BoxLayout(centerJPanel, BoxLayout.Y_AXIS));
@@ -174,21 +165,14 @@ public class Hangman extends JFrame implements ActionListener {
         StartPanel.setOpaque(false);
         StartPanel.setBackground(Color.GREEN);
 
-        // JPanel marginLeftStart = new JPanel();
-        // marginLeftStart.setMaximumSize(new Dimension(150, 30));
-        // marginLeftStart.setBackground(new Color(0, 0, 0, 0));
-        // marginLeftStart.setBackground(Color.RED);
-
         StartGame = new JButton("Jouer");
         StartGame.setMaximumSize(new Dimension(300, 80));
         StartGame.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 70));
         StartGame.setForeground(Color.BLACK);
-        StartGame.setBackground(new Color(190, 200, 210, 255));
         StartGame.setFocusPainted(false);
         StartGame.setBorderPainted(false);
-        StartGame.setContentAreaFilled(true);
+        StartGame.setContentAreaFilled(false);
 
-        //StartPanel.add(marginLeftStart);
         StartPanel.add(StartGame);
 
         JPanel marginStart = new JPanel();
@@ -199,11 +183,6 @@ public class Hangman extends JFrame implements ActionListener {
         AddPanel.setLayout(new BoxLayout(AddPanel, BoxLayout.X_AXIS));
         AddPanel.setOpaque(false);
 
-        // JPanel marginLeftAdd = new JPanel();
-        // marginLeftAdd.setMaximumSize(new Dimension(150, 30));
-        // marginLeftAdd.setBackground(new Color(0, 0, 0, 0));
-        // marginLeftAdd.setBackground(Color.RED);
-
         JButton AddWords = new JButton("Ajouter un mot");
         AddWords.setMaximumSize(new Dimension(500, 80));
         AddWords.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 70));
@@ -211,9 +190,8 @@ public class Hangman extends JFrame implements ActionListener {
         AddWords.setBackground(new Color(190, 200, 210, 255));
         AddWords.setFocusPainted(false);
         AddWords.setBorderPainted(false);
-        AddWords.setContentAreaFilled(true);
+        AddWords.setContentAreaFilled(false);
 
-        //AddPanel.add(marginLeftAdd);
         AddPanel.add(AddWords);
 
         JPanel marginAdd = new JPanel();
@@ -426,15 +404,8 @@ public class Hangman extends JFrame implements ActionListener {
 
         setTitle("Hangman");
         setSize(1920,1080);
-        // setResizable(false);
         setLocationRelativeTo(null);
-        // GraphicsDevice graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        // if (graphicsDevice.isFullScreenSupported()) {
-        //     graphicsDevice.setFullScreenWindow(this);
-        // } else {
-        //     System.err.println("Le mode plein écran n'est pas pris en charge");
-        //     dispose();
-        // }
+
 
         JPanel centerJPanel = new JPanel();
         centerJPanel.setLayout(new BoxLayout(centerJPanel, BoxLayout.Y_AXIS));
@@ -590,16 +561,10 @@ public class Hangman extends JFrame implements ActionListener {
         honzPanel.add(marginbtwleftnrightPanel);
         honzPanel.add(RightPart);
         
-        // centerJPanel.add(HangMan);
         add(centerJPanel);
 
         setVisible(true);
 
-
-        System.out.println(HangMan.getWidth());
-        System.out.println(HangMan.getHeight());
-        System.out.println(HangMan.getWidth());
-        System.out.println(HangMan.getHeight());
     }
 
     public void selectWord() {
@@ -618,7 +583,6 @@ public class Hangman extends JFrame implements ActionListener {
         ImageIcon icon = new ImageIcon(imagePath);
         Image image = icon.getImage();
         if (image.getWidth(null) == -1) {
-            System.out.println("Image not found");
             return;
         }
         Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -659,7 +623,6 @@ public class Hangman extends JFrame implements ActionListener {
             } else {
                 attemptsLeft--;
                 removePieceImage(HangMan);
-                System.out.println(String.valueOf( 7-attemptsLeft));
                 setPieceImage("./Hangman/HangMan/etape"+String.valueOf( 7-attemptsLeft)+".png", HangMan,200,400);
             }
         } else if (guessLetter.length() != 0){
@@ -670,7 +633,6 @@ public class Hangman extends JFrame implements ActionListener {
             for (int i = 0; i < word.length(); i++) {
                 if (word.charAt(i) == guessedLetter) {
                     hiddenWord.setCharAt(3*i, guessedLetter);
-                    System.out.println(hiddenWord);
                     found = true;
                 }
             }

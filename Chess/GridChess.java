@@ -47,16 +47,9 @@ public class GridChess extends JFrame {
         BackgroundPanel backgroundPanel = new BackgroundPanel();
         setContentPane(backgroundPanel);
         setLayout(new BorderLayout());
-        backgroundImage = new ImageIcon("./Chess/Image/rules.png").getImage();
- 
-        // GraphicsDevice graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        // if (graphicsDevice.isFullScreenSupported()) {
-        //     graphicsDevice.setFullScreenWindow(this);
-        // } else {
-        //     System.err.println("Le mode plein écran n'est pas pris en charge");
-        //     dispose();
-        // }
-
+        backgroundImage = new ImageIcon("rules.png").getImage();
+       
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         buttonPanel = new RoundedPanel(217,217,217,255);
         buttonPanel.setMaximumSize(new Dimension(400,90));
@@ -67,18 +60,11 @@ public class GridChess extends JFrame {
         StartGame.setBorderPainted(false);   
         StartGame.setFocusPainted(false);
 
-        // MainPanel.add(StartGame);
-        // MainPanel.add(TitleGame);
-        // JPanel RulesPanel = new JPanel();
-        // RulesPanel.setBackground(new Color(24,70,50));
-        // MainPanel.add(RulesPanel);
         MainPanel.add(MarginPanel);
         buttonPanel.add(StartGame);
         MainPanel.add(buttonPanel);
         
         add(MainPanel);
-
-        // BackGround.add(buttonPanel, BorderLayout.SOUTH);
         
         StartGame.addActionListener(new ActionListener() {
             @Override
@@ -92,7 +78,7 @@ public class GridChess extends JFrame {
         });
 
         pack();
-        setSize(1920,1080);
+        setSize(1800,810);
         setVisible(true);
     }
     private void DisplayGame(){
@@ -114,16 +100,14 @@ public class GridChess extends JFrame {
                 } else {
                     BackgroundGrid[i][j].setBackground(new Color(118,130,86));
                 }
-                BackgroundGrid[i][j].setBounds(j * 130, i * 130, 130, 130);
+                BackgroundGrid[i][j].setBounds(j * 100, i * 100, 100, 100);
                 LayeredPane.add(BackgroundGrid[i][j], JLayeredPane.DEFAULT_LAYER);
             }
         }
         SetUpGrid();
         setResizable(false);
-        setLocationRelativeTo(null);
         add(LayeredPane, BorderLayout.CENTER);
-        pack();
-        setSize(1055,1080);
+        setSize(810,825);
         setVisible(true);
     }
     public static void main(String[] args) {
@@ -156,7 +140,7 @@ public class GridChess extends JFrame {
                 PiecesGrid[i][j] = new Case();
                 PiecesGrid[i][j].Panel = new JButton();
                 PiecesGrid[i][j].Panel.setOpaque(false);
-                PiecesGrid[i][j].Panel.setBounds(j * 130, i * 130, 130, 130);
+                PiecesGrid[i][j].Panel.setBounds(j * 100, i * 100, 100, 100);
                 PiecesGrid[i][j].Panel.setBorderPainted(false);
                 PiecesGrid[i][j].Panel.setFocusPainted(false);
                 PiecesGrid[i][j].Panel.setContentAreaFilled(false);
@@ -240,9 +224,7 @@ public class GridChess extends JFrame {
     
             targetButton.revalidate();
             targetButton.repaint();
-        } else {
-            System.out.println("Image loading failed!");
-        }
+        } 
     }
     public void removePieceImage(JButton button) {
         button.removeAll();
@@ -253,7 +235,6 @@ public class GridChess extends JFrame {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            // Dessinez l'image en arrière-plan
             g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
         }
     }

@@ -9,7 +9,6 @@ public class Position {
         this.x = x;
         this.y = y;
     }
-    //ffgdfg
     public static Position GetRandomPosition(){
         Random randomNumbers = new Random();
         int x = randomNumbers.nextInt(10);

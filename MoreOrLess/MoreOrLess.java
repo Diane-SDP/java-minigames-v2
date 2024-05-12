@@ -28,13 +28,14 @@ public class MoreOrLess extends JFrame {
 
     private int randomInteger(int min, int max) {
         var random = Math.floor(Math.random() * (max - min + 1)) + min;
-        System.out.println("Nombre aléatoire: " + random);
         return (int) random;
         
     }
 
     private void initComponents() {
-        Image backgroundImage = new ImageIcon("./image/moreorless.gif").getImage();
+        ImageIcon icon = new ImageIcon("./image/start.gif");
+        Image backgroundImage = icon.getImage();
+    
         backgroundPanel = new BackgroundPanel(backgroundImage);
         backgroundPanel.setLayout(new GridBagLayout()); 
     
@@ -51,7 +52,7 @@ public class MoreOrLess extends JFrame {
         guessButton.setBorderPainted(false);
         guessButton.setContentAreaFilled(true);
     
-        status = new JLabel("Enter a number and guess");
+        status = new JLabel("Entre un nombre et devine");
         status.setForeground(Color.WHITE);
         status.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 20));
     
@@ -64,13 +65,11 @@ public class MoreOrLess extends JFrame {
             }
         });
     
-        //Merci chatgpt pour le code ci-dessous
         // Création d'un GridBagConstraints pour ajuster le placement
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER; // Le composant est le dernier de sa ligne.
         gbc.anchor = GridBagConstraints.CENTER; // Cette ligne centrer les composants.
         gbc.fill = GridBagConstraints.HORIZONTAL; // Étendre horizontalement
-        // gbc.insets = new Insets(10, 0, 10, 0); // Marges externes pour l'esthétique
 
         JPanel margiPanel = new JPanel();
         margiPanel.setPreferredSize(new Dimension(100, 20));
@@ -96,7 +95,7 @@ public class MoreOrLess extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 randomNumber = randomInteger(0, 1000);
                 nbGuess = 0;
-                status.setText("Enter a number and guess");
+                status.setText("Entre un nombre et devine");
             }
         });
 

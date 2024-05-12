@@ -46,7 +46,6 @@ public class PacMan extends JPanel{
     public void Move(){
         
         NextAnimation();
-        // this.PacManGame.GridBackground[PosX][PosY].panel.setOpaque(false);
         switch (this.TempDirection) {
             case 1:
                 if(!InWall(PosX, PosY-20)){

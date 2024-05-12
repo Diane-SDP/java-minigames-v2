@@ -13,10 +13,9 @@ public class CancelMovement implements ActionListener{
         this.y = y;
         this.Grid = BackgroundGrid;
     }
-    //ffd
+    
     @Override
     public void actionPerformed(ActionEvent e){
-        System.out.println("reset");
         boolean RowColor = true;
         this.Grid.Turn = !this.Grid.Turn;
         for(int i = 0; i < 8; i++) {
@@ -28,12 +27,11 @@ public class CancelMovement implements ActionListener{
                 } else {
                     Grid.BackgroundGrid[i][j].setBackground(new Color(118,130,86));
                 }
-                Grid.BackgroundGrid[i][j].setBounds(j * 130, i * 130, 130, 130);
+                Grid.BackgroundGrid[i][j].setBounds(j * 100, i * 100, 100, 100);
                 for(ActionListener al : this.Grid.PiecesGrid[i][j].Panel.getActionListeners()) {
                     this.Grid.PiecesGrid[i][j].Panel.removeActionListener(al);
                 }
                 Grid.PiecesGrid[i][j].Panel.addActionListener(new ShowMovement(i,j,Grid));
-                // Grid.LayeredPane.add(Grid.BackgroundGrid[i][j], JLayeredPane.DEFAULT_LAYER);
             }
         }
     }

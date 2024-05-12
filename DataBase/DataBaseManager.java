@@ -35,40 +35,20 @@ public class DataBaseManager {
     private static void openConnection() {
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("Connexion réussie à la base de données MySQL!");
         } catch (SQLException e) {
-            System.out.println("Échec de la connexion à la base de données");
             e.printStackTrace();
         }
     }
 
-    public void test() {
-        try (Statement statement = connection.createStatement()) {
-            // Créer la table "pute" si elle n'existe pas déjà
-            String createTableSQL = "CREATE TABLE IF NOT EXISTS pute (id INT AUTO_INCREMENT PRIMARY KEY, name TEXT)";
-            statement.executeUpdate(createTableSQL);
-
-            System.out.println("Table 'pute' créée avec succès !");
-        } catch (SQLException e) {
-            System.out.println("Erreur lors de la création de la table 'pute'");
-            e.printStackTrace();
-        }
-    }
     public void CreateDBTrueFalse(){
         try (Statement statement = connection.createStatement()) {
-            // Créer la table "pute" si elle n'existe pas déjà
             String createTableSQL = "CREATE TABLE IF NOT EXISTS TrueFalse (Id INT AUTO_INCREMENT PRIMARY KEY, Question TEXT,Answer TEXT)";
-            // questionsReponses.put("Les chats sont des mammifères.", true);
-            // questionsReponses.put("La Terre est plate.", false);
-            // questionsReponses.put("Paris est la capitale de la France.", true);
             statement.executeUpdate(createTableSQL);
 
-            System.out.println("Table 'pute' créée avec succès !");
             if (getRowCount("HangMan")==0){
                 generateHangManWord();
             }
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la création de la table 'pute'");
             e.printStackTrace();
         }
     }
@@ -88,18 +68,14 @@ public class DataBaseManager {
     }
     public void CreateDBHangman(){
         try (Statement statement = connection.createStatement()) {
-            // Créer la table "pute" si elle n'existe pas déjà
             String createTableSQL = "CREATE TABLE IF NOT EXISTS HangMan (Id INT AUTO_INCREMENT PRIMARY KEY, Word TEXT)";
             statement.executeUpdate(createTableSQL);
-            System.out.println("Table 'Hangman' créée avec succès !");
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la création de la table 'pute'");
             e.printStackTrace();
         }
     }
     public void CreateDBBlackJack(){
         try (Statement statement = connection.createStatement()) {
-            // Créer la table "pute" si elle n'existe pas déjà
             String createTableSQL = "CREATE TABLE IF NOT EXISTS BlackJack (Id INT AUTO_INCREMENT PRIMARY KEY, Pseudo TEXT,PassWord TEXT,Money INTEGER)";
             statement.executeUpdate(createTableSQL);
         } catch (SQLException e) {
@@ -108,7 +84,6 @@ public class DataBaseManager {
     }
     public void CreateDBSudoku(){
         try (Statement statement = connection.createStatement()) {
-            // Créer la table "pute" si elle n'existe pas déjà
             String createTableSQL = "CREATE TABLE IF NOT EXISTS Sudoku (Id INT AUTO_INCREMENT PRIMARY KEY, Score Integer)";
             statement.executeUpdate(createTableSQL);
 
@@ -136,7 +111,6 @@ public class DataBaseManager {
             }
             return 0;
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération des questions");
             e.printStackTrace();
         }
         return -1;
@@ -148,11 +122,6 @@ public class DataBaseManager {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, score);
             int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) {
-                System.out.println("Le score a été mis à jour avec succès.");
-       } else {
-           System.out.println("Aucune mise à jour effectuée. Vérifiez vos données.");
-       }
    } catch (SQLException e) {
        e.printStackTrace();
    }
@@ -203,10 +172,7 @@ public class DataBaseManager {
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            System.out.println("add question :"+Question+ " | "+stringanswer);
             String sql = "INSERT INTO TrueFalse(Question,Answer) VALUES('"+ Question + "','"+stringanswer+"')";
-
-            System.out.println(sql);
             statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -239,7 +205,6 @@ public class DataBaseManager {
             }
             return questionsReponses;
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération des questions");
             e.printStackTrace();
         } finally {
             // Fermer les ressources
@@ -273,7 +238,6 @@ public class DataBaseManager {
             while (resultSet.next()) {
                 String password = resultSet.getString("PassWord");
                 Integer money = resultSet.getInt("Money");
-                System.out.println(Password+" | "+password);
                 if(Password.equals(password)){
                     return money;
                 }
@@ -281,7 +245,6 @@ public class DataBaseManager {
                 
             }
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération des questions");
             e.printStackTrace();
         }
         return -1;
@@ -291,8 +254,6 @@ public class DataBaseManager {
         try {
             statement = connection.createStatement();
             String sql = "INSERT INTO HangMan(Word) VALUES('"+ word + "')";
-
-            System.out.println(sql);
             statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -310,12 +271,6 @@ public class DataBaseManager {
             // Exécuter la requête de mise à jour
             int lignesModifiees = statement.executeUpdate();
             
-            // Vérifier si des lignes ont été modifiées
-            if (lignesModifiees > 0) {
-                System.out.println("La somme d'argent du joueur " + pseudo + " a été mise à jour avec succès.");
-            } else {
-                System.out.println("Aucun joueur trouvé avec le pseudo " + pseudo + ".");
-            }
         }catch (SQLException e) {
             e.printStackTrace();
         }
@@ -359,7 +314,6 @@ public class DataBaseManager {
             }
             return Words;
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération des questions");
             e.printStackTrace();
         } finally {
             // Fermer les ressources

@@ -47,7 +47,6 @@ public class TrueOrFalse extends JFrame {
 
     public TrueOrFalse() {
         DisplayMenu();
-        // DisplayGame();
         setLocationRelativeTo(null);
     }
 
@@ -56,15 +55,12 @@ public class TrueOrFalse extends JFrame {
         setTitle("True or False Game");
         setSize(700, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // setLayout(new BorderLayout());
         TitleGame = new JLabel("<html><div style='text-align: center;'>REPONDEZ AUX QUESTIONS<br/>PAR VRAI OU FAUX</div></html>");
         TitleGame.setHorizontalTextPosition(SwingConstants.CENTER);
-        //add(TitleGame, BorderLayout.NORTH);
         ImageIcon icon = null;
         try {
             icon = new ImageIcon("./TrueOrFalse/image/bg.png");
             if (icon.getImageLoadStatus() != java.awt.MediaTracker.COMPLETE) {
-                System.out.println(icon.getImageLoadStatus());
                 throw new Exception("Failed to load image");
             }
         } catch (Exception e) {
@@ -90,7 +86,6 @@ public class TrueOrFalse extends JFrame {
         AddPanel = new JPanel();
         AddPanel.setLayout(new BoxLayout(AddPanel, BoxLayout.Y_AXIS));
 
-        // TitleGame.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         TitleGame.setFont(new Font("The Wild Breath of Zelda", Font.PLAIN, 50));
         TitleGame.setForeground(Color.WHITE);
 
@@ -247,7 +242,6 @@ public class TrueOrFalse extends JFrame {
             randomEntry = iterator.next();
         }
         if (randomEntry != null) {
-            System.out.println("delete" + randomEntry.getKey());
             questionsReponses.remove(randomEntry.getKey());
         }
         return randomEntry;
@@ -333,7 +327,6 @@ public class TrueOrFalse extends JFrame {
         HonzSubPanel.setOpaque(false);
 
         TitleGame.setText("AJOUTER UNE QUESTION");
-        // TitleGame.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
         
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -349,7 +342,6 @@ public class TrueOrFalse extends JFrame {
         submit.setFocusPainted(false);
         submit.setFont(new Font("The Wild Breath of Zelda", Font.PLAIN, 40));
         submit.setForeground(Color.WHITE);
-        // submit.setVerticalAlignment(JLabel.CENTER);
 
         JButton retour = new JButton("retour");
         retour.setContentAreaFilled(false);
@@ -395,13 +387,6 @@ public class TrueOrFalse extends JFrame {
         HonzSubPanel.add(margPanel6);
 
         add(centerPanel);
-
-
-        // buttonPanel.add(submit);
-  
-        // backPanel.add(retour, BorderLayout.EAST);  
-        // backgroundPanel.add(buttonPanel);
-        // backgroundPanel.add(backPanel, BorderLayout.SOUTH);
         
         submit.addActionListener(new ActionListener() {
             @Override
@@ -416,7 +401,7 @@ public class TrueOrFalse extends JFrame {
         retour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                remove(buttonPanel);
+                remove(centerPanel);
                 DisplayMenu();
                 revalidate(); // Recalculer la disposition des composants
                 repaint();
@@ -456,7 +441,6 @@ public class TrueOrFalse extends JFrame {
 
         JPanel textJPanel = new JPanel();
         textJPanel.setLayout(new BoxLayout(textJPanel, BoxLayout.Y_AXIS));
-        // textJPanel.setLayout(new FlowLayout());
         textJPanel.setOpaque(false);
 
         JPanel margiPanel = new JPanel();
@@ -543,12 +527,10 @@ public class TrueOrFalse extends JFrame {
 
         try {
             int size = db.getTableSize("TrueFalse");
-            System.out.println("La taille de la table TrueFalse est : " + size);
             if (size==0){
                 db.generateQuestions();
             }
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération de la taille de la table");
             e.printStackTrace();
         }
         questionsReponses = db.GetQuestion();   

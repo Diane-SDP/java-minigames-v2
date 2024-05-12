@@ -33,8 +33,11 @@ Ce projet nécessite le setup de MySQL, et l'installation de Javasound.
 
 - Assurez-vous d'avoir Java installé sur votre système.
 - Clonez ce dépôt Git ou téléchargez-le sous forme de fichier zip.
-- Compilez les fichiers source Java à l'aide de votre environnement de développement préféré.
-- Exécutez l'application en lançant la classe principale SelectionWindow.java
+- Executez cette commande à la racine du projet :
+
+```bash
+java -jar minigames.jar
+```
 
 ## Installation de MySQL
 
@@ -94,8 +97,6 @@ Si le fichier ne fonctionne pas, vous pouvez suivre les étapes suivantes :
 ## Utilisation
 
 Une fois le projet lancé, vous pourrez choisir votre mini-jeu parmi ceux proposés sur le menu, et suivre les instructions de chacuns d'entre eux.
-**REMARQUE**
-Ce projet n'est executable QUE si vous avez une connexion internet, les temps de chargements peuvent être impactés par votre débit.
 
 ## Auteurs
 

@@ -34,15 +34,7 @@ public class MoreOrLess extends JFrame {
     }
 
     private void initComponents() {
-        Image backgroundImage = null;
-        try {
-            URL imageUrl = new URL("https://upload.cyen.fr/share/1714907183332766.gif");
-            backgroundImage = ImageIO.read(imageUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Erreur lors du téléchargement de l'image");
-        }
-    
+        Image backgroundImage = new ImageIcon("./image/moreorless.gif").getImage();
         backgroundPanel = new BackgroundPanel(backgroundImage);
         backgroundPanel.setLayout(new GridBagLayout()); 
     

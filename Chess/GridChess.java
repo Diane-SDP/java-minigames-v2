@@ -47,13 +47,7 @@ public class GridChess extends JFrame {
         BackgroundPanel backgroundPanel = new BackgroundPanel();
         setContentPane(backgroundPanel);
         setLayout(new BorderLayout());
-        try {
-            URL url = new URL("https://upload.cyen.fr/share/1715065372538466.png");
-            backgroundImage = new ImageIcon(url).getImage();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
+        backgroundImage = new ImageIcon("./Chess/Image/rules.png").getImage();
  
         // GraphicsDevice graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         // if (graphicsDevice.isFullScreenSupported()) {

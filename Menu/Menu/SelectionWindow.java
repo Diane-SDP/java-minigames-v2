@@ -43,36 +43,31 @@ public class SelectionWindow extends JFrame {
 
 
     public SelectionWindow() {
-        try {
-            URL url = new URL("https://upload.cyen.fr/share/1714142419113367.gif");
-            ImageIcon icon = new ImageIcon(url);
-            JLabel label = new JLabel(icon);
-            add(label);
-            setSize(1280, 720);
-            setLayout(new FlowLayout());
-            setLocationRelativeTo(null);
-            setVisible(true);
+        ImageIcon icon = new ImageIcon("./image/start.gif");
+        JLabel label = new JLabel(icon);
+        add(label);
+        setSize(1280, 720);
+        setLayout(new FlowLayout());
+        setLocationRelativeTo(null);
+        setVisible(true);
      
-            Timer soundTimer = new Timer(90, new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    playSound("https://upload.cyen.fr/share/1714141878983764.wav");
-                }
-            });
-            soundTimer.setRepeats(false);
-            soundTimer.start();
+        Timer soundTimer = new Timer(90, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                playSound("./sound/start.wav");
+            }
+        });
+        soundTimer.setRepeats(false);
+        soundTimer.start();
     
-            Timer removeLabelTimer = new Timer(3800, new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    remove(label);
-                    DisplayMenu();
-                    repaint(); 
-                }
-            });
-            removeLabelTimer.setRepeats(false);
-            removeLabelTimer.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Timer removeLabelTimer = new Timer(3800, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                remove(label);
+                DisplayMenu();
+                repaint(); 
+            }
+        });
+        removeLabelTimer.setRepeats(false);
+        removeLabelTimer.start();
     }
 
     private void DisplayMenu() {
@@ -481,7 +476,7 @@ public class SelectionWindow extends JFrame {
         }
         
         setVisible(true);
-        playSoundLoop("https://upload.cyen.fr/share/1714156185653125.wav");
+        playSoundLoop("./sound/music.wav");
     }
 
     private JButton createButton(String text, boolean enableAction) { 
@@ -644,7 +639,7 @@ public class SelectionWindow extends JFrame {
                     repaint();
                     // linkedButton.setForeground(Color.WHITE);  
                     linkedButton.setFont(new Font("The Wild Breath of Zelda", Font.BOLD, 38));
-                    playSound("https://upload.cyen.fr/share/1714160690590393.wav");
+                    playSound("./sound/hover.wav");
                 }
                 @Override
                 public void mouseExited(MouseEvent e) {

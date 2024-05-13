@@ -65,7 +65,7 @@ public class DoMovement implements ActionListener{
         this.Grid.getContentPane().removeAll();
         this.Grid.getContentPane().setBackground(new Color(255,127,127));
         
-        JLabel gameOverLabel = new JLabel("T'as perdu sale "+qui);
+        JLabel gameOverLabel = new JLabel("L'équipe "+qui + "a perdu !");
         gameOverLabel.setForeground(Color.WHITE);
         gameOverLabel.setFont(new Font("Arial", Font.BOLD, 50));
         gameOverLabel.setHorizontalAlignment(SwingConstants.CENTER);

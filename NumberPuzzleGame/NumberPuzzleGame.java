@@ -420,7 +420,10 @@ public class NumberPuzzleGame extends JFrame{
                             BackgroundGrid[i][j].panel.repaint();    
                         }else if(BackgroundGrid[i][j].GetNumber() == BackgroundGrid[i-1][j].GetNumber()){
                             BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
-                            Score+=BackgroundGrid[i-1][j].GetNumber()*2;        
+                            Score+=BackgroundGrid[i-1][j].GetNumber()*2;  
+                            if (BackgroundGrid[i-1][j].SetNumber(BackgroundGrid[i-1][j].GetNumber()*2,NumberGrid[i-1][j])){        
+                                System.out.println("win");
+                            }      
                         }
                     }
                 }
@@ -442,7 +445,9 @@ public class NumberPuzzleGame extends JFrame{
                             }else if(BackgroundGrid[i][j].GetNumber() == BackgroundGrid[i][j+1].GetNumber()){
                                 BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
                                 Score+=BackgroundGrid[i][j+1].GetNumber()*2;
-                                
+                                if (BackgroundGrid[i][j+1].SetNumber(BackgroundGrid[i][j+1].GetNumber()*2,NumberGrid[i][j+1])){        
+                                    System.out.println("win");        
+                                }
                             }
                         }
                     }
@@ -465,7 +470,9 @@ public class NumberPuzzleGame extends JFrame{
                         }else if(BackgroundGrid[i][j].GetNumber() == BackgroundGrid[i+1][j].GetNumber()){
                             BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
                             Score+=BackgroundGrid[i+1][j].GetNumber()*2;
-                            
+                            if (BackgroundGrid[i+1][j].SetNumber(BackgroundGrid[i+1][j].GetNumber()*2,NumberGrid[i+1][j])){        
+                                System.out.println("win");        
+                            }
                         }
                     }
                 }
@@ -487,7 +494,9 @@ public class NumberPuzzleGame extends JFrame{
                         }else if(BackgroundGrid[i][j].GetNumber() == BackgroundGrid[i][j-1].GetNumber()){
                             BackgroundGrid[i][j].SetNumber(0,NumberGrid[i][j]);
                             Score+=BackgroundGrid[i][j-1].GetNumber()*2;
-                            
+                            if (BackgroundGrid[i][j-1].SetNumber(BackgroundGrid[i][j-1].GetNumber()*2,NumberGrid[i][j-1])){        
+                                System.out.println("win");        
+                            }
                         }
                     }
                 }
@@ -500,8 +509,5 @@ public class NumberPuzzleGame extends JFrame{
                 break;
         }
     
-    }
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new NumberPuzzleGame());
     }
 }

@@ -587,7 +587,7 @@ public class Blackjack extends JFrame {
         buttonPanel.add(b2); 
         JPanel margiPanel2 = new JPanel();
         margiPanel2.setPreferredSize(new Dimension(10, 40));
-        margiPanel2.setBackground(Color.RED);
+        margiPanel2.setBackground(new Color(0, 0, 0, 0));
         buttonPanel.add(margiPanel2);
         b.setBounds(50,100,95,30);
         buttonPanel.add(b);  
@@ -605,11 +605,11 @@ public class Blackjack extends JFrame {
 
         JPanel marginPanel = new JPanel();
         marginPanel.setPreferredSize(new Dimension(150, 200));
-        marginPanel.setBackground(Color.RED);
+        marginPanel.setBackground(new Color(0, 0, 0, 0));
 
         JPanel margiPanel = new JPanel();
         margiPanel.setPreferredSize(new Dimension(150, 40));
-        margiPanel.setBackground(Color.RED);
+        margiPanel.setBackground(new Color(0, 0, 0, 0));
 
 
 
